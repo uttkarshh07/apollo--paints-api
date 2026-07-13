@@ -16,7 +16,21 @@ Upload any image — a fabric swatch, an inspiration photo, a wall you like else
 Describe what you want in plain language — *"calming blue for a bedroom"*, *"warm orange for a kitchen"* — and get back real matching shades. Falls back to an LLM-assisted interpretation for open-ended descriptions the keyword matcher can't parse.
 
 ### 🎯 Colour harmony / palettes
-Ask *"what goes with [shade code]"* or *"complementary colours for a warm terracotta"* to get a full palette: complementary, analogous, triadic, split-complementary, and tonal variations — built from real colour-wheel theory and snapped to actual catalogue shades.
+Ask for a matching colour palette and get back a full set built from real colour-wheel theory, every result snapped to an actual catalogue shade:
+
+- **By shade code:** *"what goes with 1D2827"*
+- **By description:** *"complementary colours for a warm terracotta"*, *"palette for a living room"*
+
+Returns five labeled groups:
+| Group | What it is |
+|---|---|
+| Complementary | opposite hue on the colour wheel — high contrast |
+| Analogous | neighbouring hues — subtle, cohesive |
+| Triadic | three evenly-spaced hues — balanced and vibrant |
+| Split-complementary | complementary hue, split either side — contrast with less tension |
+| Tonal ramp | lighter/darker versions of the same hue — for trim, ceiling, or accent walls |
+
+If a shade code is mentioned, the palette is built directly around that shade. If not, the query is first matched to a base shade (reusing the text-recommendation engine), then the palette is built around whatever that resolves to — so `"what goes with"` never fails just because no exact code was given.
 
 ---
 
@@ -101,6 +115,11 @@ data/shades.json — the Berger shade catalogue (1,575 entries)
 ```
 
 ---
+
+## Changelog
+
+- **v1.0** — Photo matching + text-based shade recommendations, deployed on Render + Netlify
+- **v1.1** — Added colour harmony/palette generation (`/api/harmony`), wired into the chat widget with natural-language intent detection (e.g. distinguishing *"what goes with X"* from a plain shade request)
 
 ## Notes
 
